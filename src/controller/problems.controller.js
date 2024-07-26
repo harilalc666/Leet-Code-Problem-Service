@@ -1,29 +1,44 @@
-const { test1 } = require("../services/problem.service");
+const ProblemService = require('../services/problem.service');
+const ProblemRepository = require('../repository/problem.repository');
+const problemService = new ProblemService(new ProblemRepository);
 
-async function addProblem(req, res){
-    return;
+async function addProblem(req, res, next){
+	try {
+		const createdProblem = await problemService.createProblem(req?.body);
+		return res.status(201).json({
+			success: true,
+			message: "Successfully created the New Problem",
+			data: createdProblem,
+		})
+	} catch (error) {
+		next(error);
+	}
 }
 
-async function getProblem(){
-    return;
+async function getProblem(req, res, next){
+	try {
+		
+	} catch (error) {
+		next(error);
+	}
 }
 
 async function getProblems(){
-    return;
+	return;
 }
 
 async function updateProblem(){
-    return;
+	return;
 }
 
 async function deleteProblem(){
-    return;
+	return;
 }
 
 module.exports = {
-    deleteProblem,
-    getProblem,
-    getProblems,
-    updateProblem,
-    addProblem
+	deleteProblem,
+	getProblem,
+	getProblems,
+	updateProblem,
+	addProblem
 }
