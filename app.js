@@ -4,7 +4,6 @@ const apiRouter = require('./src/routes');
 const errorHandler = require('./src/utils/errorHandler');
 const { PORT } = require('./src/config/server.config');
 const connetToMongoDb = require('./src/config/db.config');
-const serverUpTime =  new Date();
 
 
 app.use(express.json())
@@ -13,10 +12,18 @@ app.use(express.text());
 
 app.use('/leet-code', apiRouter);
 
+
 // last error middleware
 app.use(errorHandler)
-app.listen(PORT, async()=>{
-    console.log(`Server is runnig on port ${PORT}`)
-    await connetToMongoDb();
-    console.log('Connected to MongoDb Successfully');
+
+
+app.listen(PORT, async () => {
+	console.log(`Server is runnig on port ${PORT}`)
+	try {
+		await connetToMongoDb()
+		console.log('Connected to MongoDb Successfully');
+	} catch (error) {
+		console.log('Connection to Mongo DB failed');
+		process.exit(1)
+	}
 })
