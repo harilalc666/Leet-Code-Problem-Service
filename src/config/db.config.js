@@ -1,14 +1,14 @@
 const mongoose = require('mongoose');
-const { ATLAS_DB_CONNECT } = require('./server.config');
+const mongoDbConnection = process.env.MONGO_DB_CONNECTION
 
-async function connetToMongoDb(){
-    try {
-        console.log('wait for the DB connection......');
-        await mongoose.connect(ATLAS_DB_CONNECT);
-    } catch (error) {
-        console.error(`Connection to Mongo DB failed: ${error.message}`);
-        throw error;
-    }
+async function connetToMongoDb() {
+  try {
+    console.log('wait for the DB connection......');
+    await mongoose.connect(mongoDbConnection);
+  } catch (error) {
+    throw error;
+    
+  }
 }
 
 module.exports = connetToMongoDb;
