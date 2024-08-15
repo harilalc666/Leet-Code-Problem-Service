@@ -4,18 +4,18 @@ const TurndownService = require('turndown');
 
 function sanitizeMarkDownContent(markdownContent) {
 
-    const markdownToHtml = markdown.parse(markdownContent);
+	const markdownToHtml = markdown.parse(markdownContent);
 
-    // removing malicous scripts in the html
-    const cleanHtml = sanitizeHtmlLibrary(markdownToHtml, {
-        allowedTags: sanitizeHtmlLibrary.defaults.allowedTags,
-        allowedAttributes: { '*': ['href', 'name', 'target', 'src', 'srcset', 'alt', 'title', 'width', 'height', 'loading'] },
-    },
+	// removing malicous scripts in the html
+	const cleanHtml = sanitizeHtmlLibrary(markdownToHtml, {
+		allowedTags: sanitizeHtmlLibrary.defaults.allowedTags,
+		allowedAttributes: { '*': ['href', 'name', 'target', 'src', 'srcset', 'alt', 'title', 'width', 'height', 'loading'] },
+	},
 
-    );
+	);
 
-    // convert back to markdown
-    return new TurndownService().turndown(cleanHtml);;
+	// convert back to markdown
+	return new TurndownService().turndown(cleanHtml);
 }
 
 module.exports = sanitizeMarkDownContent;

@@ -11,11 +11,13 @@ function errorHandler(err, req, res, next){
 		})
 	}
 
+	// logging exception error
 	logger.error('Unhandled Error', {
         message: err.message,
         stack: err.stack,
         details: err,
     });
+
 	return res.status(500).json({
 		success: false,
 		message: 'Something went wrong',

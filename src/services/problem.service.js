@@ -1,5 +1,5 @@
 const BaseError = require("../errors/base.error");
-const sanitizeMarkDownContent = require('../utils/sanitize');
+const sanitizeMarkDownContent = require("../utils/sanitize-html");
 
 class ProblemService {
 
