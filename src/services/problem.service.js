@@ -1,4 +1,6 @@
+const BadRequest = require("../errors/badrequest.error");
 const BaseError = require("../errors/base.error");
+const NotFound = require("../errors/notfound.error");
 const sanitizeMarkDownContent = require("../utils/sanitize-html");
 
 class ProblemService {
@@ -14,7 +16,7 @@ class ProblemService {
 			
 			const result = await this.problemRepo.createProblem(problemData)
 
-			if (!result) throw new BaseError(400, 'Something went error', 'Unable to create problem');
+			if (!result) throw new BaseError(400, 'Bad Request', 'Unable to create problem');
 
 			return result;
 		} catch (error) {
@@ -22,11 +24,16 @@ class ProblemService {
 		}
 	}
 
-	async getProblem({id}){
+	async getProblem(id){
 		try {
+			
+			console.log('id', typeof id);
+			
+			if(!id) throw new BadRequest({details: "Need to pass ID"});
+
 			const result = await this.problemRepo.getProblem(id);
 
-			if(!result) throw new BaseError(404, "NotFound", "problem not found with id",{});
+			if(!result) throw new NotFound('Problem not found', {details: `No record matches with id ${id}`})
 
 			return result;
 		} catch (error) {
