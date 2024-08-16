@@ -26,9 +26,6 @@ class ProblemService {
 
 	async getProblem(id){
 		try {
-			
-			console.log('id', typeof id);
-			
 			if(!id) throw new BadRequest({details: "Need to pass ID"});
 
 			const result = await this.problemRepo.getProblem(id);

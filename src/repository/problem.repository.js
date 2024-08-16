@@ -8,7 +8,7 @@ class ProblemRepository {
 		try {
 			return await ProblemSchema.create(problemData);
 		} catch (error) {
-			console.log(error.message);
+			console.error(error.message);
 			throw new InternalServerError(error.message);
 		}
 	}

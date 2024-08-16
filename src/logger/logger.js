@@ -21,10 +21,9 @@ async function errorLogger(req, res, err) {
         const errorLog = new ErrorLog({
             url: originalUrl,
             method: method,
-            query: query,
-            params: params,
+            query: Object.keys(query).length ? query : '',
+            params: Object.keys(params).length ? params : '',
             requestBody: body,
-            responseBody: responseBody,
             errorDetails: err instanceof BaseError ? err.details : err.message,
             statusCode: statusCode
         });
