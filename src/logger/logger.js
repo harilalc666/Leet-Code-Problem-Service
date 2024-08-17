@@ -1,5 +1,6 @@
+const logToCosmosDB = require("../clientAPI/cosmos-client-api");
 const BaseError = require("../errors/base.error");
-const ErrorLog = require("../schemas/error.log.schema");
+// const ErrorLog = require("../schemas/error.log.schema");
 
 async function errorLogger(req, res, err) {
     // Capture request details
@@ -18,7 +19,7 @@ async function errorLogger(req, res, err) {
     
     // Log error details after response is sent
     res.on('finish', async () => {
-        const errorLog = new ErrorLog({
+        const errorLog = {
             url: originalUrl,
             method: method,
             query: Object.keys(query).length ? query : '',
@@ -26,10 +27,11 @@ async function errorLogger(req, res, err) {
             requestBody: body,
             errorDetails: err instanceof BaseError ? err.details : err.message,
             statusCode: statusCode
-        });
+        }
 
         try {
-            await errorLog.save();
+            // await errorLog.save();
+            await logToCosmosDB(errorLog);
         } catch (saveError) {
             console.error('Failed to save error log:', saveError.message);
         }
