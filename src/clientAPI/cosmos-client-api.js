@@ -1,7 +1,7 @@
 const { CosmosClient } = require("@azure/cosmos");
 
 const endpoint = process.env.AZURE_ENDPOINT;
-const key = AZURE_KEY;
+const key = process.env.AZURE_KEY;
 const containerId = 'error-logs'
 const databaseId = 'logs';
 
